@@ -6,12 +6,12 @@
     "mysql2": "^3.2.4"
   },
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon index.js"
   },
   "name": "bootcamp_employee_tracker",
   "description": "",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "./index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
