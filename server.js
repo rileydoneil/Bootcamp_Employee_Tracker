@@ -1,6 +1,11 @@
 const express = require('express');
+//import init
+const init = require('./app/index');
 // Import and require mysql2
 const mysql = require('mysql2');
+// Hide sensitive information
+require("dotenv").config();
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -14,24 +19,21 @@ const db = mysql.createConnection(
   {
     host: 'localhost',
     // MySQL username,
-    user: 'root',
+    user: process.env.user,
     // MySQL password
-    password: '',
+    password: process.env.password,
     database: 'employee_db'
   },
-  console.log(`Connected to the employee_db database.`)
+  console.log(`Connected to the employee_db database.`),
 );
-
-// Query database
-// db.query('SELECT * FROM students', function (err, results) {
-//   console.log(results);
-// });
-
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+async function start() {
+  init();
+}
+
+start();
+module.exports = db
