@@ -1,6 +1,12 @@
 const inquirer = require('inquirer');
-const {db} = require('../server.js');
+const db = require('../connection/connection');
 const {VIEW_ALL_EMPLOYEES, ADD_EMPLOYEE, VIEW_ALL_ROLES, ADD_ROLE, VIEW_ALL_DEPARTMENTS, ADD_Department} = require('../queries/index');
+
+db.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
+  
 
 async function viewEmployees() {
     let data = await db.promise().query(VIEW_ALL_EMPLOYEES);

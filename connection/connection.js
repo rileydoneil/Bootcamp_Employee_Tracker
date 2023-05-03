@@ -1,6 +1,5 @@
 const express = require('express');
 //import init
-const init = require('./app/index');
 // Import and require mysql2
 const mysql = require('mysql2');
 // Hide sensitive information
@@ -31,9 +30,16 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-async function start() {
-  init();
-}
 
-start();
+
+db.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+// async function start() {
+//   init();
+// }
+
+// start();
 module.exports = db

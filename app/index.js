@@ -17,14 +17,16 @@ const question = [
         'Quit'
       ]
     }
-  ]
+];
 
 async function init() {
-     const { answer } = await inquirer.prompt(question);
+
+     const { answer } = await inquirer.prompt(question)
         switch(answer) {
             case 'View All Employees': {
                 let data = await viewEmployees();
                 console.table(data);
+                // console.log('hello');
                 return init();  
             }
             case 'Add Employee': {
@@ -36,7 +38,8 @@ async function init() {
                 return init();
             }
             case 'View All Roles': {
-                await viewRoles();
+                let data = await viewRoles();
+                console.table(data);
                 return init();
             }
             case 'Add Role': {
@@ -44,7 +47,8 @@ async function init() {
                 return init();
             }
             case 'View All Departments': {
-                await viewDepartments();
+                let data = await viewDepartments();
+                console.table(data);
                 return init();
             }
             case 'Add Department': {
@@ -52,7 +56,7 @@ async function init() {
                 return init();
             }
             case 'Quit': {
-                break;
+                process.exit();
             }
             // default:
             // console.log('Invalid choice');
