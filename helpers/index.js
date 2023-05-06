@@ -30,31 +30,34 @@ async function viewDepartments() {
 //https://snyk.io/advisor/npm-package/inquirer/functions/inquirer.prompt
 //figured out how to get multiple variables back without .then(answers =>)
 async function addEmployee() {
-    const {firstName, lastName, role, managerID} = await inquirer.prompt(
-        {
-            type: 'input',
-            name: 'firstName',
-            message: 'Employee first name'
-        },
-        {
-            type: 'input',
-            name: 'lastName',
-            message: 'Employee last name'
-        },
-        {
-            type: 'input',
-            name: 'role',
-            message: 'Employee role'
-        },
-        {
-            type: 'input',
-            name: 'managerID',
-            message: "Employee's manager id"
-        }
-    )
+    const question = [{
+        type: 'input',
+        name: 'firstName',
+        message: 'Employee first name'
+    },
+    {
+        type: 'input',
+        name: 'lastName',
+        message: 'Employee last name'
+    },
+    {
+        type: 'input',
+        name: 'role',
+        message: 'Employee role'
+    },
+    {
+        type: 'input',
+        name: 'managerID',
+        message: "Employee's manager id"
+    }];
 
-    let [data] = await db.promise().query(ADD_EMPLOYEE, [firstName, lastName, role, managerID]);
-    return data;
+    const {firstName, lastName, role, managerID} = await inquirer.prompt(question)
+    async () => {
+        let [data] = await db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, role, managerID]);
+        return data;
+    };
+
+    
 }
 
 async function addRole() {

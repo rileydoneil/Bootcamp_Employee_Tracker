@@ -31,7 +31,7 @@ async function init() {
             }
             case 'Add Employee': {
                 let data = await addEmployee();
-                console.table(data)
+                console.log(`${data} has been added! `);
                 return init();
             }
             case 'Update Employee Role': {
@@ -43,7 +43,7 @@ async function init() {
                 return init();
             }
             case 'Add Role': {
-                await addRole();
+                let data = await addRole();
                 return init();
             }
             case 'View All Departments': {
