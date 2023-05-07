@@ -6,7 +6,8 @@
     "mysql2": "^3.2.4"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "seed": "node run seeds.sql"
   },
   "name": "bootcamp_employee_tracker",
   "description": "",
