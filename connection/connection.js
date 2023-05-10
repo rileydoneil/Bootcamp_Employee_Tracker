@@ -30,7 +30,12 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-
+// var sql = "INSERT INTO department (id, name) VALUES ('4', 'Accounting')";
+// db.query(sql, function (err, result) {
+//   if (err) throw err;
+//   console.log("1 record inserted, ID: " + result.insertId);
+//   return result;
+// });
 
 db.connect(function(err) {
   if (err) throw err;
@@ -42,4 +47,4 @@ db.connect(function(err) {
 // }
 
 // start();
-module.exports = db
+module.exports = db;
