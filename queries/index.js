@@ -12,6 +12,6 @@ const VIEW_ALL_ROLES =
 INNER JOIN department ON role.department_id = department.id;`
 const ADD_ROLE = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?);`
 const VIEW_ALL_DEPARTMENTS = `SELECT * FROM employee_db.department`
-const ADD_Department = `INSERT INTO departments SET ?`
+const ADD_Department = `INSERT INTO departments (id, name) VALUES (?,?)`
 
 module.exports = {VIEW_ALL_EMPLOYEES, ADD_EMPLOYEE, VIEW_ALL_ROLES, ADD_ROLE, VIEW_ALL_DEPARTMENTS, ADD_Department}

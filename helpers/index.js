@@ -2,11 +2,17 @@ const inquirer = require('inquirer');
 const db = require('../connection/connection');
 const {VIEW_ALL_EMPLOYEES, ADD_EMPLOYEE, VIEW_ALL_ROLES, ADD_ROLE, VIEW_ALL_DEPARTMENTS, ADD_Department} = require('../queries/index');
 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
+// db.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+// });
   
+// var sql = `INSERT INTO department (id, name) VALUES ('6', 'test2')`;
+// db.query(sql, function (err, result) {
+//   if (err) throw err;
+//   console.log("1 record inserted, ID: " + result.insertId);
+//   return result;
+// });
 
 async function viewEmployees() {
     let data = await db.promise().query(VIEW_ALL_EMPLOYEES);
@@ -51,49 +57,61 @@ async function addEmployee() {
         message: "Employee's manager id"
     }];
 
-    const {firstName, lastName, role, managerID} = await inquirer.prompt(question)
-    async () => {
-        let [data] = await db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, role, managerID]);
-        return data;
-    };
+    const {firstName, lastName, role, managerID} = await inquirer.prompt(question);
+    let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${firstName}', '${lastName}', '${role}', '${managerID}');`
+    db.promise().query(sql);
+    // async () => {
+    //     let [data] = await db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, role, managerID]);
+    //     return data;
+    // };
 
     
 }
 
 async function addRole() {
-    const {title, salary, departmentID} = await inquirer.prompt(
-        {
-            type: 'input',
-            name: 'title',
-            message: 'Role Title'
-        },
-        {
-            type: 'input',
-            name: 'salary',
-            message: 'Role Salary'
-        },
-        {
-            type: 'input',
-            name: 'departmentID',
-            message: 'Department ID'
-        }
-    )
-
-    let [data] = await db.promise().query(ADD_ROLE, [title, salary, departmentID]);
-    return data;
+    let question = [{
+        type: 'input',
+        name: 'title',
+        message: 'Role Title'
+    },
+    {
+        type: 'input',
+        name: 'salary',
+        message: 'Role Salary'
+    },
+    {
+        type: 'input',
+        name: 'departmentID',
+        message: 'Department ID'
+    }];
+    const {title, salary, departmentID} = await inquirer.prompt(question)
+    let sql = `INSERT INTO role (title, salary, department_id) VALUES ('${title}','${salary}','${departmentID}');`;
+    db.promise().query(sql);
+    // let [data] = db.promise().query(ADD_ROLE, [title, salary, departmentID]);
+    // return data;
 }
 
 async function addDepartment() {
-    const departmentID = await inquirer.prompt(
-        {
-            type: 'input',
-            name: 'departmentID',
-            message: 'What is the Department ID'
-        }
-    )
+    console.log('made it to addDepartment');
+    const question = [{
+        type: 'input',
+        name: 'departmentID',
+        message: 'What is the Department ID'
+    },
+    {
+        type: 'input',
+        name: 'departmentName',
+        message: "What is the Department Name"
+    }];
+    const {departmentID, departmentName} = await inquirer.prompt(question);
+    
 
-    let [data] = await db.promise().query(ADD_Department, departmentID);
-    return data;
+    var sql = `INSERT INTO department (id, name) VALUES ('${departmentID}', '${departmentName}')`;
+    db.promise().query(sql);
+    // return data;
+    // let [data] = db.promise().query(ADD_Department, [departmentID, departmentName]);
+    // return data;
+    
 }
 
 module.exports = {viewEmployees, viewRoles, viewDepartments, addEmployee, addRole, addDepartment}
